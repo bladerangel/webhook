@@ -7,13 +7,14 @@ const supabase = createClient(
 )
 
 function getNowBrazilISO() {
-    return format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", {
-        timeZone: "America/Sao_Paulo"
-    })
+    return (
+        format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", {
+            timeZone: "America/Sao_Paulo"
+        }) + "Z"
+    )
 }
 export async function insertWebhook(origin, payload) {
     const created = getNowBrazilISO()
-    console.log(created)
     const { data, error } = await supabase
         .from("webhook")
         .insert([{ origin, payload, created }])
