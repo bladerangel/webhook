@@ -15,6 +15,7 @@ function getNowBrazilISO() {
 }
 export async function insertWebhook(origin, payload) {
     const created = getNowBrazilISO()
+    console.log(created)
     const { data, error } = await supabase
         .from("webhook")
         .insert([{ origin, payload, created }])
