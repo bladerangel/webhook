@@ -7,7 +7,9 @@ const supabase = createClient(
 )
 
 export async function insertWebhook(origin, payload) {
-    const created = moment().utcOffset(-3).format("YYYY-MM-DD HH:mm:ss")
+    const created = moment
+        .tz("America/Sao_Paulo")
+        .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
     console.log(created)
     const { data, error } = await supabase
         .from("webhook")
