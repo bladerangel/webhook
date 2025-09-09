@@ -5,11 +5,17 @@ const supabase = createClient(
     process.env.SUPABASE_KEY
 )
 
+function formatISOSecondsLocal(date) {
+    return new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+    ).toISOString()
+}
+
 export async function insertWebhook(origin, payload) {
-    console.log(origin, payload)
+    const created = formatISOSecondsLocal(new Date())
     const { data, error } = await supabase
         .from("webhook")
-        .insert([{ origin, payload }])
+        .insert([{ origin, payload, created }])
         .select()
         .single()
 
