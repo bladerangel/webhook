@@ -1,20 +1,13 @@
 import { createClient } from "@supabase/supabase-js"
-import { format } from "date-fns-tz"
+import moment from "moment-timezone"
 
 const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_KEY
 )
 
-function getNowBrazilISO() {
-    return (
-        format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS", {
-            timeZone: "America/Sao_Paulo"
-        }) + "Z"
-    )
-}
 export async function insertWebhook(origin, payload) {
-    const created = getNowBrazilISO()
+    const created = moment().utcOffset(-3).format("YYYY-MM-DD HH:mm:ss")
     console.log(created)
     const { data, error } = await supabase
         .from("webhook")
